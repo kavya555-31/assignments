@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spotify Clone</title>
+  <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    .trending-grid, .artist-row {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: 10px 0;
+    }
+
+    .song-card, .artist-img {
+      flex: 0 0 auto;
+      margin-right: 20px;
+      scroll-snap-align: start;
+      text-align: center;
+    }
+
+    .song-card img, .artist-img img {
+      border-radius: 10px;
+      width: 100px;
+      height: 100px;
+    }
+
+    .section-title {
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-box">
+    <!-- Top Navigation -->
+    <div class="top-nav">
+      <div class="left-nav">
+        <i class="fab fa-spotify icon"></i>
+        <i class="fas fa-home icon"></i>
+        <div class="search-bar">
+          <input type="text" placeholder="What do you want to search?" />
+          <i class="fas fa-copy copy-icon"></i>
+        </div>
+      </div>
+      <div class="right-nav">
+        <div class="nav-links">
+          <span>Premium</span>
+          <span>Support</span>
+          <span>Download</span>
+        </div>
+        <div class="divider"></div>
+        <div class="nav-actions">
+          <span><i class="fas fa-download"></i> Install App</span>
+          <span>Sign up</span>
+          <button class="login-btn">Log in</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Content -->
+    <div class="bottom-box">
+      <!-- Sidebar -->
+      <div class="side-nav">
+        <div class="your-library">
+          <h4>Your Library</h4>
+          <i class="fas fa-plus"></i>
+        </div>
+        <div class="playlist-box">
+          <div class="playlist-card">
+            <p>Create your first playlist</p>
+            <span>It's easy, we'll help you</span>
+            <button>Create playlist</button>
+          </div>
+          <div class="playlist-card">
+            <p>Let's find some podcasts to follow</p>
+            <span>We'll keep you updated on new episodes</span>
+            <button>Browse podcasts</button>
+          </div>
+        </div>
+        <div class="legal-links">
+          <a href="#">Legal</a>
+          <a href="#">Safety & Privacy Center</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Cookies</a>
+          <a href="#">About Ads</a>
+          <a href="#">Accessibility</a>
+        </div>
+        <button class="lang-btn">
+          <i class="fas fa-globe"></i> English
+        </button>
+      </div>
+
+      <!-- Center Content -->
+      <div class="center-box">
+        <!-- Trending Songs -->
+        <h2 class="section-title">Trending Songs</h2>
+        <div class="trending-grid">
+          <div class="song-card">
+            <div class="song-img">
+              <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?fit=crop&w=100&h=100" alt="Midnight Echo" />
+            </div>
+            <p class="song-title">Midnight Echo</p>
+            <p class="song-artist">Ava Stone</p>
+          </div>
+
+          <div class="song-card">
+            <div class="song-img">
+              <img src="https://images.unsplash.com/photo-1485579149621-3123dd979885?fit=crop&w=100&h=100" alt="Rhythm Wave" />
+            </div>
+            <p class="song-title">Rhythm Wave</p>
+            <p class="song-artist">Leo Martinez</p>
+          </div>
+
+          <div class="song-card">
+            <div class="song-img">
+              <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?fit=crop&w=100&h=100" alt="Skyline Drive" />
+            </div>
+            <p class="song-title">Skyline Drive</p>
+            <p class="song-artist">Nina Park</p>
+          </div>
+
+          <div class="song-card">
+            <div class="song-img">
+              <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?fit=crop&w=100&h=100" alt="Ocean Breeze" />
+            </div>
+            <p class="song-title">Ocean Breeze</p>
+            <p class="song-artist">Liam Smith</p>
+          </div>
+
+          <div class="song-card">
+            <div class="song-img">
+              <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?fit=crop&w=100&h=100" alt="Sunset Vibes" />
+            </div>
+            <p class="song-title">Sunset Vibes</p>
+            <p class="song-artist">Mia Johnson</p>
+          </div>
+
+          <div class="song-card">
+            <div class="song-img">
+              <img src="https://images.unsplash.com/photo-1521747116042-5a810fda9664?fit=crop&w=100&h=100" alt="Chasing Stars" />
+            </div>
+            <p class="song-title">Chasing Stars</p>
+            <p class="song-artist">Noah Brown</p>
+          </div>
+
+          <div class="song-card">
+            <div class="song-img">
+              <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?fit=crop&w=100&h=100" alt="Dreamscape" />
+            </div>
+            <p class="song-title">Dreamscape</p>
+            <p class="song-artist">Ella White</p>
+          </div>
+
+          <div class="song-card">
+            <div class="song-img">
+              <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?fit=crop&w=100&h=100" alt="Nightfall" />
+            </div>
+            <p class="song-title">Nightfall</p>
+            <p class="song-artist">James Black</p>
+          </div>
+
+          <div class="song-card">
+            <div class="song-img">
+              <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?fit=crop&w=100&h=100" alt="Euphoria" />
+            </div>
+            <p class="song-title">Euphoria</p>
+            <p class="song-artist">Sophia Green</p>
+          </div>
+
+          <div class="song-card">
+            <div class="song-img">
+              <img src="https://images.unsplash.com/photo-1521747116042-5a810fda9664?fit=crop&w=100&h=100" alt="Lost in Time" />
+            </div>
+            <p class="song-title">Lost in Time</p>
+            <p class="song-artist">Oliver Blue</p>
+          </div>
+
+          <div class="song-card">
+            <div class="song-img">
+              <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?fit=crop&w=100&h=100" alt="Whispers" />
+            </div>
+            <p class="song-title">Whispers</p>
+            <p class="song-artist">Liam Grey</p>
+          </div>
+
+          <div class="song-card">
+            <div class="song-img">
+              <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?fit=crop&w=100&h=100" alt="Fading Light" />
+            </div>
+            <p class="song-title">Fading Light</p>
+            <p class="song-artist">Mia Rose</p>
+          </div>
+
+          <div class="song-card">
+            <div class="song-img">
+              <img src="https://images.unsplash.com/photo-1521747116042-5a810fda9664?fit=crop&w=100&h=100" alt="Into the Wild" />
+            </div>
+            <p class="song-title">Into the Wild</p>
+            <p class="song-artist">Noah Black</p>
+          </div>
+        </div>
+
+        <!-- Popular Artists -->
+        <h2 class="section-title">Popular Artists</h2>
+        <div class="artist-row">
+          <div class="artist-img">
+            <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?fit=crop&w=120&h=120" alt="Ethan James" />
+            <p class="artist-name">Ethan James</p>
+          </div>
+          <div class="artist-img">
+            <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?fit=crop&w=120&h=120" alt="Luna Grey" />
+            <p class="artist-name">Luna Grey</p>
+          </div>
+          <div class="artist-img">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/71/Jason_Cruz_%28Strung_Out%29_%28Ruhrpott_Rodeo_2013%29_IMGP4879_nmz.jpg" alt="Jaxon Cruz" />
+            <p class="artist-name">Jason Cruz</p>
+          </div>
+          <div class="artist-img">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?fit=crop&w=120&h=120" alt="Sienna Rose" />
+            <p class="artist-name">Sienna Rose</p>
+          </div>
+          <div class="artist-img">
+            <img src="https://images.unsplash.com/photo-1521747116042-5a810fda9664?fit=crop&w=120&h=120" alt="Oliver Green" />
+            <p class="artist-name">Oliver Green</p>
+          </div>
+          <div class="artist-img">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?fit=crop&w=120&h=120" alt="Sophia White" />
+            <p class="artist-name">Sophia White</p>
+          </div>
+          <div class="artist-img">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?fit=crop&w=120&h=120" alt="Liam Black" />
+            <p class="artist-name">Liam Black</p>
+          </div>
+          <div class="artist-img">
+            <img src="https://images.unsplash.com/photo-1521747116042-5a810fda9664?fit=crop&w=120&h=120" alt="Emma Blue" />
+            <p class="artist-name">Emma Blue</p>
+          </div>
+          <div class="artist-img">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?fit=crop&w=120&h=120" alt="Noah Grey" />
+            <p class="artist-name">Noah Grey</p>
+          </div>
+          <div class="artist-img">
+            <img src="https://images.unsplash.com/photo-1521747116042-5a810fda9664?fit=crop&w=120&h=120" alt="Ava Stone" />
+            <p class="artist-name">Ava Stone</p>
+          </div>
+          <div class="artist-img">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?fit=crop&w=120&h=120" alt="Leo Martinez" />
+            <p class="artist-name">Leo Martinez</p>
+          </div>
+          <div class="artist-img">
+            <img src="https://images.unsplash.com/photo-1521747116042-5a810fda9664?fit=crop&w=120&h=120" alt="Mia Johnson" />
+            <p class="artist-name">Mia Johnson</p>
+          </div>
+          <div class="artist-img">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?fit=crop&w=120&h=120" alt="Nina Park" />
+            <p class="artist-name">Nina Park</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>  
+</body>
+</html>

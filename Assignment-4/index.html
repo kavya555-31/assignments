@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Login/Signup Page</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <main class="auth-container">
+        <section class="auth-box" id="login-box">
+            <h1 class="auth-title">Welcome Back</h1>
+            <form onsubmit="login(); return false;">
+                <label for="login-phone">Phone Number</label>
+                <input type="text" id="login-phone" name="phone" placeholder="Enter your phone number" required />
+
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" name="password" placeholder="Enter your password" required />
+
+                <button type="submit">Login</button>
+            </form>
+            <p id="login-message" aria-live="polite"></p>
+            <p>Don't have an account? <a href="#" onclick="toggleForms()">Sign Up</a></p>
+        </section>
+
+        <section class="auth-box" id="signup-box" style="display: none;">
+            <h1 class="auth-title">Create Account</h1>
+            <form onsubmit="signup(); return false;">
+                <label for="signup-phone">Phone Number</label>
+                <input type="text" id="signup-phone" name="phone" placeholder="Enter your phone number" required />
+
+                <label for="signup-password">Password</label>
+                <input type="password" id="signup-password" name="password" placeholder="Create a password" required />
+
+                <button type="submit">Sign Up</button>
+            </form>
+            <p id="signup-message" aria-live="polite"></p>
+            <p>Already have an account? <a href="#" onclick="toggleForms()">Login</a></p>
+        </section>
+    </main>
+
+    <script src="index.js"></script>
+</body>
+</html>
