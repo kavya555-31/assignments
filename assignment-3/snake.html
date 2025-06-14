@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Responsive Snake Game</title>
+<style>
+  /* Modern dark theme and breathable layout */
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #121212, #1c1c1c);
+    font-family: 'Poppins', sans-serif;
+    color: #e0e0e0;
+    user-select: none;
+  }
+
+  h1 {
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+
+  #score {
+    font-size: 1.2rem;
+    margin-bottom: 24px;
+    font-weight: 600;
+    color: #90ee90;
+  }
+
+  canvas {
+    border: 3px solid #4caf50;
+    background: #000;
+    border-radius: 12px;
+    /* Responsive canvas - max width 90vw but fixed aspect ratio */
+    width: min(90vw, 400px);
+    height: min(90vw, 400px);
+    image-rendering: pixelated;
+    box-shadow: 0 0 15px rgba(72, 214, 72, 0.8);
+  }
+
+  /* Overlay for game over */
+  #overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(18, 18, 18, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #4caf50;
+    font-weight: 700;
+    font-size: 2rem;
+    flex-direction: column;
+    gap: 24px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+  }
+
+  #overlay.visible {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  button {
+    padding: 12px 32px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #121212;
+    background: #4caf50;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgb(72 214 72 / 0.6);
+    transition: background 0.3s ease;
+  }
+
+  button:hover,
+  button:focus {
+    background: #66bb6a;
+    outline: none;
+  }
+</style>
+</head>
+<body>
+  <h1>Snake Game</h1>
+  <div id="score">Score: 0</div>
+  <canvas id="game" width="400" height="400" aria-label="Snake game play area"></canvas>
+
+  <div id="overlay" role="alert" aria-live="assertive">
+    <div id="gameOverMessage">Game Over! Your score: 0</div>
+    <button id="restartBtn" aria-label="Restart Game">Restart</button>
+  </div>
+
+<script>
+(() => {
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const box = 20;
+  const gridCount = canvas.width / box; // 400 / 20 = 20
+  let snake = [];
+  let food = {};
+  let direction = null;
+  let nextDirection = null;
+  let score = 0;
+  let gameOver = false;
+  const scoreDisplay = document.getElementById('score');
+  const overlay = document.getElementById('overlay');
+  const gameOverMessage = document.getElementById('gameOverMessage');
+  const restartBtn = document.getElementById('restartBtn');
+  let gameInterval;
+
+  function init() {
+    snake = [
+      { x: 9 * box, y: 10 * box },
+      { x: 8 * box, y: 10 * box },
+      { x: 7 * box, y: 10 * box }
+    ];
+    direction = 'RIGHT';
+    nextDirection = 'RIGHT';
+    score = 0;
+    gameOver = false;
+    scoreDisplay.textContent = 'Score: 0';
+    overlay.classList.remove('visible');
+    placeFood();
+    if (gameInterval) clearInterval(gameInterval);
+    gameInterval = setInterval(gameLoop, 120); // controls speed
+  }
+
+  function placeFood() {
+    let validPosition = false;
+    while (!validPosition) {
+      food.x = Math.floor(Math.random() * gridCount) * box;
+      food.y = Math.floor(Math.random() * gridCount) * box;
+      // Check food does not spawn inside snake
+      validPosition = !snake.some(segment => segment.x === food.x && segment.y === food.y);
+    }
+  }
+
+  function drawBox(x, y, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, box, box);
+    ctx.strokeStyle = '#0f3c0f';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(x, y, box, box);
+  }
+
+  function draw() {
+    // Clear canvas with black
+    ctx.fillStyle = '#000000';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Draw snake with gradient effect
+    for (let i = 0; i < snake.length; i++) {
+      // Head glowing bright lime
+      if (i === 0) drawBox(snake[i].x, snake[i].y, '#9ef01a');
+      else {
+        // Body darker green with slight transparency gradient
+        let alpha = 0.3 + 0.7 * ((snake.length - i) / snake.length);
+        drawBox(snake[i].x, snake[i].y, `rgba(30, 130, 30, ${alpha})`);
+      }
+    }
+
+    // Draw food as glowing red square
+    drawBox(food.x, food.y, '#ff4444');
+  }
+
+  function gameLoop() {
+    if (gameOver) {
+      clearInterval(gameInterval);
+      overlay.classList.add('visible');
+      gameOverMessage.textContent = `Game Over! Your score: ${score}`;
+      return;
+    }
+
+    direction = nextDirection;
+
+    // Calculate new head coordinates
+    const head = { x: snake[0].x, y: snake[0].y };
+
+    if (direction === 'UP') head.y -= box;
+    else if (direction === 'DOWN') head.y += box;
+    else if (direction === 'LEFT') head.x -= box;
+    else if (direction === 'RIGHT') head.x += box;
+
+    // Detect wall collision
+    if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
+      gameOver = true;
+      draw();
+      return;
+    }
+
+    // Detect self collision
+    if (snake.some(segment => segment.x === head.x && segment.y === head.y)) {
+      gameOver = true;
+      draw();
+      return;
+    }
+
+    // Add new head position
+    snake.unshift(head);
+
+    // Check if food eaten
+    if (head.x === food.x && head.y === food.y) {
+      score++;
+      scoreDisplay.textContent = `Score: ${score}`;
+      placeFood();
+    } else {
+      // Remove the tail block if no food eaten
+      snake.pop();
+    }
+
+    draw();
+  }
+
+  // Control keys with restriction (no reverse direction)
+  window.addEventListener('keydown', e => {
+    if (gameOver) return;
+    if (
+      (e.key === 'ArrowUp' || e.key === 'w') && direction !== 'DOWN' ||
+      (e.key === 'ArrowDown' || e.key === 's') && direction !== 'UP' ||
+      (e.key === 'ArrowLeft' || e.key === 'a') && direction !== 'RIGHT' ||
+      (e.key === 'ArrowRight' || e.key === 'd') && direction !== 'LEFT'
+    ) {
+      if (e.key === 'ArrowUp' || e.key === 'w') nextDirection = 'UP';
+      else if (e.key === 'ArrowDown' || e.key === 's') nextDirection = 'DOWN';
+      else if (e.key === 'ArrowLeft' || e.key === 'a') nextDirection = 'LEFT';
+      else if (e.key === 'ArrowRight' || e.key === 'd') nextDirection = 'RIGHT';
+    }
+  });
+
+  // Restart button handler
+  restartBtn.addEventListener('click', () => {
+    init();
+  });
+
+  // Initialize game on page load
+  init();
+})();
+</script>
+
+</body>
+</html>
+
